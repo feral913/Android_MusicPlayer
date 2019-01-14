@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.sample.YourActivity"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_shuffle"
         android:icon="@drawable/rand"
         android:orderInCategory="1"
+        yourapp:showAsAction="always"
         android:title="Shuffle"/>
-    <!--android:showAsAction="always"-->
 
     <item
         android:id="@+id/action_end"
         android:icon="@drawable/end"
         android:orderInCategory="2"
+        yourapp:showAsAction="always"
         android:title="End"/>
-    <!--android:showAsAction="always"-->
 </menu>

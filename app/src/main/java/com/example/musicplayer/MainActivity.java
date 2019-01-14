@@ -17,23 +17,19 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
+    private final int MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE = 100;
     private ArrayList<Song> songList;
     private ListView songView;
-    private final int MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Assume thisActivity is the current activity
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_CALENDAR);
+        requestReadExternalStoragePermission();
 
         songView = (ListView)findViewById(R.id.song_list);
         songList = new ArrayList<Song>();
-
-        getSongList();
 
         Collections.sort(songList, new Comparator<Song>() {
             @Override
@@ -42,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SongAdapter songAdt = new SongAdapter(this, songList);
-        songView.setAdapter(songAdt);
     }
 
     public void getSongList(){
@@ -69,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestReadExternalStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -83,25 +78,33 @@ public class MainActivity extends AppCompatActivity {
             } else {
 
                 // No explanation needed, we can request the permission.
+
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE);
-                // MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE is an
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
+        } else{
+            getSongList();
+            SongAdapter songAdt = new SongAdapter(this, songList);
+            songView.setAdapter(songAdt);
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE : {
+            case MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-
+                    getSongList();
+                    SongAdapter songAdt = new SongAdapter(this, songList);
+                    songView.setAdapter(songAdt);
                 } else {
 
                     // permission denied, boo! Disable the
