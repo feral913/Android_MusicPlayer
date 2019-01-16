@@ -2,19 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.sample.YourActivity"
-    xmlns:yourapp="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_shuffle"
         android:icon="@drawable/rand"
         android:orderInCategory="1"
-        yourapp:showAsAction="always"
-        android:title="Shuffle"/>
+        app:showAsAction="ifRoom"
+        android:title="@string/item_shuffle"/>
 
     <item
         android:id="@+id/action_end"
         android:icon="@drawable/end"
         android:orderInCategory="2"
-        yourapp:showAsAction="always"
-        android:title="End"/>
+        app:showAsAction="always"
+        android:title="@string/item_end"/>
 </menu>
